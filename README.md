@@ -38,3 +38,18 @@ OurWorker.perform_at(20.seconds.from_now, "C")
  Sidekiq::ScheduledSet.new.size
  => 5
 ```
+### DBMS important command
+
+```
+SELECT city FROM weather WHERE temp_lo = max(temp_lo);     WRONG
+but this will not work since the aggregate max cannot be used in the WHERE clause. (This restriction exists because the WHERE clause determines the rows that will go into the aggregation stage; so it has to be evaluated before aggregate functions are computed.) However, as is often the case the query can be restated to accomplish the intended result, here by using a subquery:
+SELECT city FROM weather
+    WHERE temp_lo = (SELECT max(temp_lo) FROM weather);
+```
+
+
+
+# To open gem in VS code:
+
+* EDITOR="code" bundle open devise
+
